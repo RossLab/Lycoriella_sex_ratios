@@ -378,6 +378,13 @@ model_multinom_weighted <- multinom(bias_category ~ generation, data = sex_ratio
 # Summary of the model
 summary(model_multinom_weighted)
 
+# pairwise comparisons between generations
+# compute estimated marginal means for the bias_category by generation
+emmeans_results <- emmeans(model_multinom_weighted, ~ generation | bias_category)
+# pairwise comparisons between the generations
+pairwise_comparisons <- pairs(emmeans_results)
+summary(pairwise_comparisons)
+
 # Plot the proportion of bias categories over generations
 sex_ratios_all$generation <- factor(sex_ratios_all$generation, levels = c("G0", "F1", "F2", "F3", "F4", "F5"))
 sex_ratios_all$bias_category <- factor(sex_ratios_all$bias_category, levels = c("Male-biased", "Unbiased", "Female-biased"))
